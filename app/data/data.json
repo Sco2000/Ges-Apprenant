@@ -1,0 +1,498 @@
+{
+    "utilisateurs": [
+        {
+            "id": 1,
+            "nom": "admin",
+            "login": "ousmane@sonatel.sn",
+            "password": "PASSER1234",
+            "profil": "Admin"
+        },
+        {
+            "id": 2,
+            "nom": "vigile",
+            "login": "vigile@sonatel.sn",
+            "password": "vigile123",
+            "profil": "Vigile"
+        },
+        {
+            "id": 3,
+            "nom": "apprenant",
+            "login": "apprenant@sonatel.sn",
+            "password": "apprenant123",
+            "profil": "Apprenant"
+        }
+    ],
+    "referenciel": [
+        {
+            "id": 1745335727,
+            "nom": "AWS",
+            "description": "dqfegsf",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/OM.jpeg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1745338265,
+            "nom": "DEV DATA",
+            "description": "ert",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/Sans titre.jpeg",
+            "statut": "inactif",
+            "apprenants": 30,
+            "modules": 0
+        },
+        {
+            "id": 1745339292,
+            "nom": "REF DIG",
+            "description": "HFF",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/Css.jpeg",
+            "statut": "inactif",
+            "apprenants": 50,
+            "modules": 0
+        },
+        {
+            "id": 1745340216,
+            "nom": "HACKEUSE",
+            "description": "SQFDS",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/frequency-wave-7776034_1920.jpg",
+            "statut": "inactif",
+            "apprenants": 50,
+            "modules": 0
+        },
+        {
+            "id": 1745342099,
+            "nom": "DEV DATA",
+            "description": "VFBGNH",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/web app.jpeg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1745529121,
+            "nom": "DEV WEB",
+            "description": "BNV",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/iPhone-13-PRO-.png",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1745554827,
+            "nom": "HACK",
+            "description": "KLJKH",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/gQLXfAqQtDNrnQO1u6g0s.jpg",
+            "statut": "inactif",
+            "apprenants": 50,
+            "modules": 0
+        },
+        {
+            "id": 1745555432,
+            "nom": "DEV",
+            "description": "DFG",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/7845baca-8338-4c60-a843-282990ef335e.jpeg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1745555457,
+            "nom": "DATA",
+            "description": "BGHKJL",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/web app.jpeg",
+            "statut": "inactif",
+            "apprenants": 50,
+            "modules": 0
+        },
+        {
+            "id": 1745555477,
+            "nom": "CLOUD",
+            "description": "DGFKJL",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/frequency-wave-7776034_1920.jpg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1745555504,
+            "nom": "DIG",
+            "description": "DSFDGYHUTJIK",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/c4PUDycwaAtRCXaBaL5nN5JnZatW8WLjYjO8BSaw.jpg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1746097827,
+            "nom": "MANNN",
+            "description": "dsqfds",
+            "capacite": 30,
+            "nb_sessions": 3,
+            "photo": "assets\/images\/referenciel\/Capture d’écran du 2025-04-04 20-41-11.png",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1746097923,
+            "nom": "MANNN",
+            "description": "dsqfds",
+            "capacite": 30,
+            "nb_sessions": 3,
+            "photo": "assets\/images\/referenciel\/Capture d’écran du 2025-04-04 20-41-11.png",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        },
+        {
+            "id": 1746097947,
+            "nom": "fan",
+            "description": "qdsf",
+            "capacite": 30,
+            "nb_sessions": 1,
+            "photo": "assets\/images\/referenciel\/OM3.jpeg",
+            "statut": "inactif",
+            "apprenants": 0,
+            "modules": 0
+        }
+    ],
+    "promotions": [
+        {
+            "id": 1,
+            "nom": "PROMO DEV 2023",
+            "dateDebut": "2023-01-15",
+            "dateFin": "2023-07-15",
+            "referenciel_id": 1,
+            "photo": "assets\/images\/promo\/promo_dev_2023.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 2,
+            "nom": "effff",
+            "dateDebut": "2023\/04\/12",
+            "dateFin": "2024\/04\/18",
+            "photo": "assets\/images\/promo\/Sans titre.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": [
+                {
+                    "id": 1745335727,
+                    "nom": "AWS",
+                    "description": "dqfegsf",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/OM.jpeg",
+                    "statut": "inactif",
+                    "apprenants": 0,
+                    "modules": 0
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "nom": "PROMOTION 2025",
+            "dateDebut": "11\/08\/2023",
+            "dateFin": "11\/08\/2024",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/6809098f41407_Sans titre.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 9,
+            "nom": "PROMOTION 2025",
+            "dateDebut": "11\/08\/2023",
+            "dateFin": "11\/08\/2024",
+            "photo": "assets\/images\/promo\/680910c0029fc_ludo2.jpeg",
+            "statut": "Active",
+            "nbrApprenant": 30,
+            "referentiel": [
+                {
+                    "id": 1745555504,
+                    "nom": "DIG",
+                    "description": "DSFDGYHUTJIK",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/c4PUDycwaAtRCXaBaL5nN5JnZatW8WLjYjO8BSaw.jpg",
+                    "statut": "inactif",
+                    "apprenants": 10,
+                    "modules": 0,
+                    "apprenant": [
+                        {
+                            "photo": "assets\/images\/apprenant\/OM.jpeg",
+                            "matricule": "DIG2025001",
+                            "nom_complet": "John Doe",
+                            "adresse": "Dakar Plateau",
+                            "telephone": "771234567",
+                            "statut": "actif"
+                        },
+                        {
+                            "photo": "assets\/images\/apprenant\/OM1.jpeg",
+                            "matricule": "DIG2025002",
+                            "nom_complet": "Jane Smith",
+                            "adresse": "Médina",
+                            "telephone": "781234567",
+                            "statut": "actif"
+                        }
+                    ]
+                },
+                {
+                    "id": 1745529121,
+                    "nom": "DEV WEB",
+                    "description": "BNV",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/iPhone-13-PRO-.png",
+                    "statut": "inactif",
+                    "apprenants": 20,
+                    "modules": 0,
+                    "apprenant": [
+                        {
+                            "photo": "assets\/images\/apprenant\/OM2.jpeg",
+                            "matricule": "DEV2025001",
+                            "nom_complet": "Pierre Diop",
+                            "adresse": "Sacré Cœur",
+                            "telephone": "761234567",
+                            "statut": "actif"
+                        },
+                        {
+                            "photo": "assets\/images\/apprenant\/OM3.jpeg",
+                            "matricule": "DEV2025002",
+                            "nom_complet": "Marie Sow",
+                            "adresse": "Point E",
+                            "telephone": "701234567",
+                            "statut": "remplacé"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "nom": "PROMOTION 2024",
+            "dateDebut": "11\/08\/2023",
+            "dateFin": "11\/08\/2024",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/68091531af49f_Sans titre.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 11,
+            "nom": "PROMOTION 2023",
+            "dateDebut": "11\/08\/2023",
+            "dateFin": "11\/08\/2024",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/6809155277dba_frequency-wave-7776034_1920.jpg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 12,
+            "nom": "zedrftg",
+            "dateDebut": "11\/08\/2023",
+            "dateFin": "11\/08\/2024",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/680a5bdd33c23_ludo2.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 13,
+            "nom": "Promotion 2000",
+            "dateDebut": "11\/02\/2021",
+            "dateFin": "11\/02\/2022",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/680a6559a646d_OM.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 14,
+            "nom": "Promotion 2000",
+            "dateDebut": "11-02-2020",
+            "dateFin": "11\/02\/2022",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/680a68bc05798_gQLXfAqQtDNrnQO1u6g0s.jpg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 15,
+            "nom": "Promotion 2005",
+            "dateDebut": "11\/02\/2021",
+            "dateFin": "11\/02\/2022",
+            "referenciel_id": null,
+            "photo": "assets\/images\/promo\/680b670a372eb_ludo2.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 18,
+            "nom": "Promotion 1700",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/680b74b5e6a3f_Css.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 19,
+            "nom": "Promotion 2030",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/680bebe4e518e_c4PUDycwaAtRCXaBaL5nN5JnZatW8WLjYjO8BSaw.jpg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 20,
+            "nom": "Promotion 2090",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/680cf6a449fc9_71-+La7ab+L.png",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": []
+        },
+        {
+            "id": 21,
+            "nom": "qsdf",
+            "dateDebut": "2025-02-05",
+            "dateFin": "2025-12-05",
+            "photo": "assets\/images\/promo\/680f6f683bd61_iPhone-13-PRO-.png",
+            "statut": "Inactive",
+            "nbrApprenant": 30,
+            "referentiel": [
+                {
+                    "id": 1745335727,
+                    "nom": "AWS",
+                    "description": "dqfegsf",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/OM.jpeg",
+                    "statut": "inactif",
+                    "apprenants": 10,
+                    "modules": 0
+                },
+                {
+                    "id": 1745339292,
+                    "nom": "REF DIG",
+                    "description": "HFF",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/Css.jpeg",
+                    "statut": "inactif",
+                    "apprenants": 10,
+                    "modules": 0
+                },
+                {
+                    "id": 1745340216,
+                    "nom": "HACKEUSE",
+                    "description": "SQFDS",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/frequency-wave-7776034_1920.jpg",
+                    "statut": "inactif",
+                    "apprenants": 10,
+                    "modules": 0
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "nom": "swfdgs",
+            "dateDebut": "2025-02-05",
+            "dateFin": "2025-12-05",
+            "photo": "assets\/images\/promo\/680fccba2753d_gQLXfAqQtDNrnQO1u6g0s.jpg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referentiel": [
+                {
+                    "id": 1745335727,
+                    "nom": "AWS",
+                    "description": "dqfegsf",
+                    "capacite": 30,
+                    "nb_sessions": 1,
+                    "photo": "assets\/images\/referenciel\/OM.jpeg",
+                    "statut": "inactif",
+                    "apprenants": 0,
+                    "modules": 0
+                }
+            ]
+        },
+        {
+            "id": 23,
+            "nom": "jbv",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/6812126ba450a_Sans titre.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referenciel_ids": []
+        },
+        {
+            "id": 24,
+            "nom": "kljhg",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/68121290690a0_Sans titre.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referenciel_ids": []
+        },
+        {
+            "id": 25,
+            "nom": "lkjhgf",
+            "dateDebut": "2025-02-05",
+            "dateFin": "2025-12-05",
+            "photo": "assets\/images\/promo\/68125e018df75_OM1.jpeg",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referenciel_ids": []
+        },
+        {
+            "id": 26,
+            "nom": "frs",
+            "dateDebut": "2003-02-12",
+            "dateFin": "2004-02-12",
+            "photo": "assets\/images\/promo\/68135c834777a_Capture d’écran du 2025-04-04 20-41-11.png",
+            "statut": "Inactive",
+            "nbrApprenant": 0,
+            "referenciel_ids": []
+        }
+    ]
+}
