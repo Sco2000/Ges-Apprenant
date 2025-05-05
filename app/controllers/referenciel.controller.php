@@ -5,16 +5,12 @@ use App\Enums\CheminPage;
 use App\Models\REFMETHODE;
 use App\Models\JSONMETHODE;
 use App\ENUM\VALIDATOR\VALIDATORMETHODE;
-use App\ENUM\ERREUR\ErreurEnum;
-use App\ENUM\MESSAGE\MSGENUM;
 
-require_once CheminPage::SESSION_SERVICE->value;
+require_once CheminPage::REF_MODEL->value;
 require_once CheminPage::MODEL->value;
 require_once CheminPage::VALIDATOR_SERVICE->value;
-require_once CheminPage::REF_MODEL->value;
+require_once CheminPage::SESSION_SERVICE->value;
 require_once CheminPage::MODEL_ENUM->value;
-require_once CheminPage::ERROR_ENUM->value;
-require_once CheminPage::MESSAGE_ENUM->value;
 
 function afficher_referentiels(): void {
     global $ref_model;
@@ -86,11 +82,6 @@ function ajouter_referenciel(): void {
     
     // Validation basique
     if (empty($_POST['nom']) || empty($_POST['capacite'])) {
-        stocker_session('errors', [
-            'nom' => empty($_POST['nom']) ? ErreurEnum::REF_NOM_REQUIRED->value : null,
-            'capacite' => empty($_POST['capacite']) ? ErreurEnum::REF_CAPACITE_REQUIRED->value : null
-        ]);
-        redirect_to_route('?page=referenciel&action=add');
         return;
     }
     
@@ -100,7 +91,6 @@ function ajouter_referenciel(): void {
 
     if ($photoPath === null) {
         stocker_session('errors', ['photo' => "Erreur lors de l'upload de la photo."]);
-        redirect_to_route('?page=referenciel&action=add');
         return;
     }
 
@@ -115,12 +105,8 @@ function ajouter_referenciel(): void {
     ];
     
     if ($ref_model[REFMETHODE::AJOUTER->value]($nouveau_ref)) {
-        stocker_session('success', MSGENUM::REUSSI->value);
         redirect_to_route('?page=referenciel');
         exit;
-    } else {
-        stocker_session('errors', ['general' => "Erreur lors de la création du référentiel"]);
-        redirect_to_route('?page=referenciel&action=add');
     }
 }
 
@@ -133,16 +119,10 @@ function affecter_referentiel(): void {
         return;
     }
     
-    $active_promos = $ref_promo_model['get_active_promo']();
-    if (empty($active_promos)) {
-        stocker_session('error', "Aucune promotion active");
-        redirect_to_route('?page=referenciel&action=add');
-        return;
-    }
+    $active_promo = current($ref_promo_model['get_active_promo']());
     
-    $active_promo = reset($active_promos); // Use reset instead of current for better array handling
-    if (!isset($active_promo['id']) || !isset($active_promo['nbrApprenant'])) {
-        stocker_session('error', "Les données de la promotion active sont invalides");
+    if (!$active_promo) {
+        stocker_session('error', "Aucune promotion active");
         redirect_to_route('?page=referenciel&action=add');
         return;
     }
@@ -161,7 +141,7 @@ function affecter_referentiel(): void {
         stocker_session('success', "Les référentiels ont été affectés avec succès");
         // Nettoyer la sélection temporaire après une affectation réussie
         unset($_SESSION['temp_selected_refs']);
-        redirect_to_route('?page=referenciel&action=add');
+        redirect_to_route('?page=referenciel&action=add');  // Modifié ici
     } else {
         stocker_session('error', "Certains référentiels n'ont pas pu être affectés");
         redirect_to_route('?page=referenciel&action=add');
@@ -212,25 +192,16 @@ function creerReferentiel(): void {
 
     // Validation des champs
     if (empty($_POST['nom'])) {
-        $errors['nom'] = ErreurEnum::REF_NOM_REQUIRED->value;
-    } elseif (strlen($_POST['nom']) < 3) {
-        $errors['nom'] = ErreurEnum::REF_NOM_LENGTH->value;
+        $errors['nom'] = "Le nom est requis";
     }
-    
     if (empty($_POST['description'])) {
-        $errors['description'] = ErreurEnum::REF_DESCRIPTION_REQUIRED->value;
+        $errors['description'] = "La description est requise";
     }
-    
-    if (empty($_POST['capacite'])) {
-        $errors['capacite'] = ErreurEnum::REF_CAPACITE_REQUIRED->value;
-    } elseif (!is_numeric($_POST['capacite']) || $_POST['capacite'] <= 0) {
-        $errors['capacite'] = ErreurEnum::REF_CAPACITE_INVALID->value;
+    if (empty($_POST['capacite']) || !is_numeric($_POST['capacite']) || $_POST['capacite'] <= 0) {
+        $errors['capacite'] = "La capacité doit être un nombre positif";
     }
-    
-    if (empty($_POST['nb_sessions'])) {
-        $errors['nb_sessions'] = ErreurEnum::REF_SESSIONS_REQUIRED->value;
-    } elseif (!is_numeric($_POST['nb_sessions']) || $_POST['nb_sessions'] <= 0 || $_POST['nb_sessions'] > 4) {
-        $errors['nb_sessions'] = ErreurEnum::REF_SESSIONS_INVALID->value;
+    if (empty($_POST['nb_sessions']) || !is_numeric($_POST['nb_sessions']) || $_POST['nb_sessions'] <= 0) {
+        $errors['nb_sessions'] = "Le nombre de sessions doit être un nombre positif";
     }
 
     // Validation de la photo
@@ -280,7 +251,7 @@ function creerReferentiel(): void {
         'modules' => 0
     ];
     if ($ref_model[REFMETHODE::AJOUTER->value]($nouveau_ref)) {
-        stocker_session('success', MSGENUM::REF_AJOUT_REUSSI->value);
+        stocker_session('success', 'Référentiel créé avec succès');
         redirect_to_route('?page=all_referenciel');
     } else {
         stocker_session('errors', ['general' => "Erreur lors de la création du référentiel"]);

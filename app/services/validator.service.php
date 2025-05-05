@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/../enums/chemin_page.php';
+require_once __DIR__ . '/../enums/erreur.enum.php';
 
-use App\Enums\CheminPage;
+use APP\Enums\CheminPage;
 use App\ENUM\VALIDATOR\VALIDATORMETHODE;
 use App\ENUM\ERREUR\ErreurEnum;
 
-require_once CheminPage::ERROR_ENUM->value;
 require_once CheminPage::VALIDATOR_ENUM->value;
 
 global $validator;

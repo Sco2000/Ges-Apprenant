@@ -12,18 +12,18 @@ enum CheminPage: string
     case ERROR_CONTROLLER = __DIR__ . '/../controllers/error.controller.php';
     case APPRENANT_CONTROLLER = __DIR__ . '/../controllers/apprenant.controller.php';
 
+    //Enums
+    case MODEL_ENUM = __DIR__ . '/../enums/model.enum.php';
+    case VALIDATOR_ENUM = __DIR__ . '/../enums/validator.enum.php';
+    case ERROR_ENUM = __DIR__ . '/../enums/erreur.enum.php';
+    case MESSAGE_ENUM = __DIR__ . '/../enums/message.enum.php';
+
     // Modèle
-    case MODEL = __DIR__ . '/../models/model.php';
+    case MODEL = __DIR__ . '/../models/model.php'; 
     case AUTH_MODEL = __DIR__ . '/../models/auth.model.php';
     case REF_MODEL = __DIR__ . '/../models/ref.model.php';
     case PROMO_MODEL = __DIR__ . '/../models/promo.model.php';
-    case APPRENANT_MODEL = __DIR__ . '/../models/apprenant.model.php';
-
-    //Enums
-    case MESSAGE_ENUM = __DIR__ . '/../enums/message.enum.php';
-    case ERROR_ENUM = __DIR__ . '/../enums/erreur.enum.php';
-    case MODEL_ENUM = __DIR__ . '/../enums/model.enum.php';
-    case VALIDATOR_ENUM = __DIR__ . '/../enums/validator.enum.php';
+    case APPRENANT_MODEL = __DIR__ . '/../models/apprenant.model.php'; 
 
     // Données
     case DATA_JSON = __DIR__ . '/../data/data.json';
@@ -60,4 +60,7 @@ enum CheminPage: string
 
     case IMG_LOGO_LOGIN = '/assets/images/login/logo_odc.png';
     case IMG_LOGO_SIDEBAR = __DIR__ . '/assets/images/sidebar/logo.png';
+
+    //Vendor
+    case VENDOR = __DIR__ . '/../../vendor/autoload.php';
 }

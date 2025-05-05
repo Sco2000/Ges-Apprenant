@@ -1,46 +1,30 @@
 <?php
 namespace App\ENUM\ERREUR;
 
-/**
- * Énumération des codes d'erreur utilisés dans l'application
- * Les valeurs sont des identifiants uniques qui seront utilisés pour récupérer
- * les messages d'erreur correspondants dans les fichiers de traduction
- */
 enum ErreurEnum: string
 {
     // Erreurs liées à l'authentification
-    case LOGIN_REQUIRED = 'auth.login.required';
-    case LOGIN_EMAIL = 'auth.login.invalid_email';
-    case PASSWORD_REQUIRED = 'auth.password.required';
-    case PASSWORD_INVALID = 'auth.password.invalid';
-    case LOGIN_INCORRECT = 'auth.login.incorrect';
-    
+    case LOGIN_REQUIRED = 'L\'email est requis.';
+    case LOGIN_EMAIL = 'L\'email n\'est pas valide.';
+    case PASSWORD_REQUIRED = 'Le mot de passe est requis.';
+    case PASSWORD_INVALID = 'password.invalid';
+    case LOGIN_INCORRECT = 'login.incorrect';
     // Erreurs liées aux promotions
-    case PROMO_ID_REQUIRED = 'promo.id.required';
-    case PROMO_NAME_REQUIRED = 'promo.name.required';
-    case PROMO_DATE_REQUIRED = 'promo.date.required';
-    case PROMO_DATE_INVALID_RANGE = 'promo.date.invalid_range';
-    case PROMO_DATE_INVALID_FORMAT = 'promo.date.invalid_format';
-    case PROMO_ADD_FAILED = 'promo.add.failed';
-    case PROMO_ACTIVATION_FAILED = 'promo.activation.failed';
-    case PROMO_AUCUNE_ACTIVE = 'promo.aucune_active';
+    case PROMO_ID_REQUIRED = 'L\'identifiant de la promotion est requis.';
+    case PROMO_NAME_REQUIRED = 'Le nom de la promotion est requis.';
+    case PROMO_DATE_REQUIRED = 'Les dates de début et de fin sont requises.';
+    case PROMO_ADD_FAILED = 'Échec de l\'ajout de la promotion.';
+    case PROMO_ACTIVATION_FAILED = 'Échec de l\'activation de la promotion.';
+
+    case PROMO_date_inferieur = 'La date de début doit être antérieure à la date de fin.';
+    case PROMO_date_norme = 'Les dates doivent être au format YYYY-MM-DD.';
 
     // Erreurs liées aux référentiels
-    case REF_NOM_REQUIRED = 'ref.nom.required';
-    case REF_NOM_LENGTH = 'ref.nom.length';
-    case REF_DESCRIPTION_REQUIRED = 'ref.description.required';
-    case REF_CAPACITE_REQUIRED = 'ref.capacite.required';
-    case REF_CAPACITE_INVALID = 'ref.capacite.invalid';
-    case REF_SESSIONS_REQUIRED = 'ref.sessions.required';
-    case REF_SESSIONS_INVALID = 'ref.sessions.invalid';
-    case REF_PHOTO_REQUIRED = 'ref.photo.required';
-    case REF_PHOTO_FORMAT_INVALID = 'ref.photo.format_invalid';
-    case REF_PHOTO_SIZE_INVALID = 'ref.photo.size_invalid';
-    case REF_PHOTO_UPLOAD_FAILED = 'ref.photo.upload_failed';
-    case REF_ID_REQUIRED = 'ref.id.required';
-    case REF_AUCUN_SELECTIONNE = 'ref.aucun_selectionne';
-    case REF_CREATION_FAILED = 'ref.creation.failed';
-    case REF_AFFECTATION_FAILED = 'ref.affectation.failed';
-    case REF_DESAFFECTATION_FAILED = 'ref.desaffectation.failed';
-    
+    case REF_NOM_REQUIRED = "Le nom du référentiel est requis";
+    case REF_NOM_LENGTH = "Le nom doit contenir au moins 3 caractères";
+    case REF_DESCRIPTION_REQUIRED = "La description est requise";
+    case REF_CAPACITE_REQUIRED = "La capacité est requise";
+    case REF_CAPACITE_INVALID = "La capacité doit être un nombre positif";
+    case REF_SESSIONS_REQUIRED = "Le nombre de sessions est requis";
+    case REF_SESSIONS_INVALID = "Le nombre de sessions doit être entre 1 et 4";
 }

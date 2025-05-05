@@ -12,11 +12,6 @@ $css_ref = '/assets/css/referenciel/all_referenciel.css';
     <title>Tous les Référentiels</title>
     <link rel="stylesheet" href="<?= $url . $css_ref ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .ref-container{
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="ref-container">
@@ -174,7 +169,7 @@ $css_ref = '/assets/css/referenciel/all_referenciel.css';
             </div>
 
             <?php if (isset($pagination) && $pagination['total_pages'] > 1): ?>
-                <div class="pagination" style="border: none;">
+                <div class="pagination">
                     <?php if ($pagination['current_page'] > 1): ?>
                         <a href="?page=all_referenciel&p=<?= $pagination['current_page'] - 1 ?><?= !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : '' ?>" 
                            class="page-link" aria-label="Page précédente">
