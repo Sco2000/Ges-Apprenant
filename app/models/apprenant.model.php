@@ -2,114 +2,176 @@
 require_once __DIR__ . '/../enums/chemin_page.php';
 
 use App\Enums\CheminPage;
-use App\Models\APPRENANTMETHODE;
 
-require_once CheminPage::MODEL_ENUM->value;
+enum APPRENANTMETHODE
+{
+    case COMPTER_APPRENANTS;
+    case FILTRER_APPRENANTS;
+    case GET_APPRENANTS_PROMOTION_ACTIVE;
+    case GET_REFERENTIELS_PROMOTION_ACTIVE;
+    case IMPORTER_APPRENANTS; // Nouvelle méthode
+}
 
 global $apprenant_methodes;
-$apprenant_methodes = [];
-
-// Fonction anonyme pour filtrer les promotions actives
-$filtrer_promotions_actives = fn(array $promotions): array => 
-    array_filter($promotions, fn($p) => $p['statut'] === 'Active');
-
-// Fonction anonyme pour compter les apprenants d'un référentiel
-$compter_apprenants_referentiel = fn(array $referentiel): int => 
-    isset($referentiel['apprenant']) ? count($referentiel['apprenant']) : 0;
-
-// Fonction anonyme pour calculer le total d'apprenants d'un ensemble de référentiels
-$calculer_total_apprenants_referentiels = function(array $referentiels) use ($compter_apprenants_referentiel): int {
-    return array_reduce(
-        $referentiels,
-        fn($sum, $ref) => $sum + $compter_apprenants_referentiel($ref),
+$apprenant_methodes = [
+    APPRENANTMETHODE::COMPTER_APPRENANTS->name => fn(array $data): int => array_reduce(
+        array_filter($data['promotions'], fn($p) => $p['statut'] === 'Active'),
+        fn($total, $promo) => $total + array_reduce(
+            $promo['referentiel'],
+            fn($sum, $ref) => $sum + (isset($ref['apprenant']) ? count($ref['apprenant']) : 0),
+            0
+        ),
         0
-    );
-};
+    ),
 
-// Fonction anonyme pour calculer le total d'apprenants de toutes les promotions actives
-$calculer_total_apprenants_promotions = function(array $promotions) use ($filtrer_promotions_actives, $calculer_total_apprenants_referentiels): int {
-    $promotions_actives = $filtrer_promotions_actives($promotions);
-    
-    return array_reduce(
-        $promotions_actives,
-        fn($total, $promo) => $total + $calculer_total_apprenants_referentiels($promo['referentiel'] ?? []),
-        0
-    );
-};
+    APPRENANTMETHODE::FILTRER_APPRENANTS->name => function(array $data, ?string $search = null, ?string $referentiel_id = null, ?string $statut = null): array {
+        $resultats = [];
+        foreach ($data['promotions'] as $promo) {
+            if ($promo['statut'] !== 'Active') continue;
+            
+            foreach ($promo['referentiel'] as $ref) {
+                if (!isset($ref['apprenant'])) continue;
+                if ($referentiel_id && $ref['id'] != $referentiel_id) continue;
 
-// Fonction anonyme pour vérifier si un apprenant correspond aux critères de recherche
-$apprenant_correspond_criteres = function(array $apprenant, ?string $search, ?string $statut): bool {
-    if ($statut && $apprenant['statut'] !== $statut) return false;
-    if ($search && !str_contains(strtolower($apprenant['nom_complet']), strtolower($search))) return false;
-    return true;
-};
+                foreach ($ref['apprenant'] as $apprenant) {
+                    if ($statut && $apprenant['statut'] !== $statut) continue;
+                    if ($search && !str_contains(strtolower($apprenant['nom_complet']), strtolower($search))) continue;
 
-// Fonction anonyme pour extraire les apprenants d'un référentiel avec les critères de filtrage
-$extraire_apprenants_referentiel = function(array $referentiel, ?string $search, ?string $statut) use ($apprenant_correspond_criteres): array {
-    if (!isset($referentiel['apprenant'])) return [];
-    
-    $resultats = [];
-    foreach ($referentiel['apprenant'] as $apprenant) {
-        if ($apprenant_correspond_criteres($apprenant, $search, $statut)) {
-            $resultats[] = array_merge($apprenant, [
-                'referentiel_id' => $referentiel['id'],
-                'referentiel_nom' => $referentiel['nom']
-            ]);
+                    $resultats[] = array_merge($apprenant, [
+                        'referentiel_id' => $ref['id'],
+                        'referentiel_nom' => $ref['nom']
+                    ]);
+                }
+            }
         }
-    }
-    
-    return $resultats;
-};
+        return $resultats;
+    },
 
-// Fonction anonyme pour extraire les apprenants d'une promotion avec les critères de filtrage
-$extraire_apprenants_promotion = function(array $promotion, ?string $search, ?string $statut, ?string $referentiel_id) use ($extraire_apprenants_referentiel): array {
-    if ($promotion['statut'] !== 'Active') return [];
+    APPRENANTMETHODE::GET_APPRENANTS_PROMOTION_ACTIVE->name => function(array $data): array {
+        foreach ($data['promotions'] as $promo) {
+            if ($promo['statut'] === 'Active') {
+                return $promo;
+            }
+        }
+        return [];
+    },
+
+    APPRENANTMETHODE::GET_REFERENTIELS_PROMOTION_ACTIVE->name => function(array $data): array {
+        $promo_active = [];
+        foreach ($data['promotions'] as $promo) {
+            if ($promo['statut'] === 'Active') {
+                $promo_active = $promo;
+                break;
+            }
+        }
+        return $promo_active['referentiel'] ?? [];
+    },
     
-    $resultats = [];
-    foreach ($promotion['referentiel'] as $ref) {
-        if ($referentiel_id && $ref['id'] != $referentiel_id) continue;
+    // Nouvelle méthode pour importer des apprenants
+    APPRENANTMETHODE::IMPORTER_APPRENANTS->name => function(array &$data, array $apprenants_importes): array {
+        $resultat = [
+            'retenus' => [],
+            'attente' => [],
+            'erreurs' => []
+        ];
         
-        $apprenants_referentiel = $extraire_apprenants_referentiel($ref, $search, $statut);
-        $resultats = array_merge($resultats, $apprenants_referentiel);
+        // Récupérer la promotion active et ses référentiels
+        $promotion_active = null;
+        $referentiels = [];
+        
+        foreach ($data['promotions'] as &$promo) {
+            if ($promo['statut'] === 'Active') {
+                $promotion_active = &$promo;
+                $referentiels = array_column($promo['referentiel'], 'nom', 'id');
+                break;
+            }
+        }
+        
+        if (!$promotion_active) {
+            $resultat['erreurs'][] = "Aucune promotion active trouvée";
+            return $resultat;
+        }
+        
+        // S'assurer que la structure pour la liste d'attente existe
+        if (!isset($data['liste_attente'])) {
+            $data['liste_attente'] = [];
+        }
+        
+        // Traiter chaque apprenant importé
+        foreach ($apprenants_importes as $apprenant) {
+            // Vérifier si tous les champs requis sont présents
+            $champs_requis = [
+                'nom_complet', 'adresse', 'telephone', 'email', 'referentiel',
+                'nom_complet_tuteur', 'lien_de_parente', 'adresse_du_tuteur', 'telephone_tuteur'
+            ];
+            
+            $champs_manquants = [];
+            foreach ($champs_requis as $champ) {
+                if (empty($apprenant[$champ])) {
+                    $champs_manquants[] = $champ;
+                }
+            }
+            
+            // Préparer l'objet apprenant
+            $nouvel_apprenant = [
+                'id' => uniqid(),
+                'matricule' => 'AP' . date('Ym') . rand(1000, 9999),
+                'nom_complet' => $apprenant['nom_complet'] ?? '',
+                'adresse' => $apprenant['adresse'] ?? '',
+                'telephone' => $apprenant['telephone'] ?? '',
+                'email' => $apprenant['email'] ?? '',
+                'photo' => '/assets/images/default-avatar.png',
+                'statut' => 'actif',
+                'tuteur' => [
+                    'nom_complet' => $apprenant['nom_complet_tuteur'] ?? '',
+                    'lien_de_parente' => $apprenant['lien_de_parente'] ?? '',
+                    'adresse' => $apprenant['adresse_du_tuteur'] ?? '',
+                    'telephone' => $apprenant['telephone_tuteur'] ?? ''
+                ]
+            ];
+            
+            // Si des champs sont manquants, ajouter à la liste d'attente
+            if (!empty($champs_manquants)) {
+                $nouvel_apprenant['raison_attente'] = 'Informations incomplètes: ' . implode(', ', $champs_manquants);
+                $data['liste_attente'][] = $nouvel_apprenant;
+                $resultat['attente'][] = $nouvel_apprenant;
+                continue;
+            }
+            
+            // Vérifier si le référentiel existe dans la promotion active
+            $referentiel_trouve = false;
+            $referentiel_id = null;
+            
+            foreach ($promotion_active['referentiel'] as &$ref) {
+                if (strtolower($ref['nom']) === strtolower($apprenant['referentiel'])) {
+                    $referentiel_trouve = true;
+                    $referentiel_id = $ref['id'];
+                    
+                    // Ajouter l'apprenant au référentiel
+                    if (!isset($ref['apprenant'])) {
+                        $ref['apprenant'] = [];
+                    }
+                    
+                    $ref['apprenant'][] = $nouvel_apprenant;
+                    $resultat['retenus'][] = array_merge($nouvel_apprenant, [
+                        'referentiel_id' => $ref['id'],
+                        'referentiel_nom' => $ref['nom']
+                    ]);
+                    break;
+                }
+            }
+            
+            // Si le référentiel n'existe pas, ajouter à la liste d'attente
+            if (!$referentiel_trouve) {
+                $nouvel_apprenant['raison_attente'] = 'Référentiel non trouvé dans la promotion active';
+                $data['liste_attente'][] = $nouvel_apprenant;
+                $resultat['attente'][] = $nouvel_apprenant;
+            }
+        }
+        
+        return $resultat;
     }
-    
-    return $resultats;
-};
-
-// Fonction anonyme pour trouver la promotion active
-$trouver_promotion_active = function(array $promotions): ?array {
-    $promotions_actives = array_filter($promotions, fn($p) => $p['statut'] === 'Active');
-    return !empty($promotions_actives) ? reset($promotions_actives) : null;
-};
-
-// Implémentation de COMPTER_APPRENANTS
-$apprenant_methodes[APPRENANTMETHODE::COMPTER_APPRENANTS->value] = function(array $data) use ($calculer_total_apprenants_promotions): int {
-    return $calculer_total_apprenants_promotions($data['promotions'] ?? []);
-};
-
-// Implémentation de FILTRER_APPRENANTS
-$apprenant_methodes[APPRENANTMETHODE::FILTRER_APPRENANTS->value] = function(array $data, ?string $search = null, ?string $referentiel_id = null, ?string $statut = null) use ($extraire_apprenants_promotion): array {
-    $resultats = [];
-    
-    foreach ($data['promotions'] as $promo) {
-        $apprenants_promotion = $extraire_apprenants_promotion($promo, $search, $statut, $referentiel_id);
-        $resultats = array_merge($resultats, $apprenants_promotion);
-    }
-    
-    return $resultats;
-};
-
-// Implémentation de GET_APPRENANTS_PROMOTION_ACTIVE
-$apprenant_methodes[APPRENANTMETHODE::GET_APPRENANTS_PROMOTION_ACTIVE->value] = function(array $data) use ($trouver_promotion_active): array {
-    $promo_active = $trouver_promotion_active($data['promotions'] ?? []);
-    return $promo_active ?: [];
-};
-
-// Implémentation de GET_REFERENTIELS_PROMOTION_ACTIVE
-$apprenant_methodes[APPRENANTMETHODE::GET_REFERENTIELS_PROMOTION_ACTIVE->value] = function(array $data) use ($trouver_promotion_active): array {
-    $promo_active = $trouver_promotion_active($data['promotions'] ?? []);
-    return $promo_active['referentiel'] ?? [];
-};
+];
 
 // On retourne aussi le tableau pour maintenir la compatibilité
 return $apprenant_methodes;

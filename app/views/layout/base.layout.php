@@ -3,10 +3,6 @@ require_once __DIR__ . '/../../enums/chemin_page.php';
 use App\Enums\CheminPage;
 require_once CheminPage::SESSION_SERVICE->value;
 demarrer_session();
-if (empty($_SESSION['user'])) {
-    header('Location: index.php?page=login');
-    exit;
-}
 // Empêcher le cache navigateur
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
@@ -78,19 +74,17 @@ $url="http://".$_SERVER["HTTP_HOST"];
         <header class="topbar">
 
             <div class="search-box">
-                <form method="GET" action="index.php">
+                <form method="GET" action="">
                     <div class="search-wrapper">
                         <i class="fas fa-search"></i>
                         <input 
                             type="text" 
                             name="global_search" 
-                            placeholder="Rechercher une promotion ou un référentiel..."
+                            placeholder="Rechercher..."
                             value="<?= htmlspecialchars($_GET['global_search'] ?? '') ?>"
                         />
-                        <input type="hidden" name="page" value="search_results">
-                        <button type="submit" class="search-btn">
-                            <i class="fas fa-search"></i>
-                        </button>
+                        <!-- Ajouter un champ caché pour préserver le paramètre page actuel -->
+                        <input type="hidden" name="page" value="<?= htmlspecialchars($_GET['page'] ?? 'dashboard') ?>">
                     </div>
                 </form>
             </div>

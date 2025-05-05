@@ -39,12 +39,3 @@ enum REFPROMETHODE: string {
     case AFFECTER_REF = 'affecter_ref';
     case GET_ACTIVE_PROMO = 'get_active_promo';
 }
-
-// Nouvelle énumération déplacée depuis apprenant.model.php
-enum APPRENANTMETHODE: string
-{
-    case COMPTER_APPRENANTS = 'COMPTER_APPRENANTS';
-    case FILTRER_APPRENANTS = 'FILTRER_APPRENANTS';
-    case GET_APPRENANTS_PROMOTION_ACTIVE = 'GET_APPRENANTS_PROMOTION_ACTIVE';
-    case GET_REFERENTIELS_PROMOTION_ACTIVE = 'GET_REFERENTIELS_PROMOTION_ACTIVE';
-}

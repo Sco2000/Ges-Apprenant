@@ -15,6 +15,7 @@ match ($page) {
     })(),
     'resetPassword' => (function () {
         require_once CheminPage::AUTH_CONTROLLER->value;
+        voir_page_reset_password();
     })(),
 
     'liste_promo' => (function () {
@@ -64,13 +65,25 @@ match ($page) {
 
     'liste_apprenants' => (function() {
         require_once CheminPage::APPRENANT_CONTROLLER->value;
-        liste_apprenants();
-    })(),
-    
-    // Nouvelle route pour la recherche globale
-    'search_results' => (function() {
-        require_once __DIR__ . '/../controllers/search.controller.php';
-        afficher_resultats_recherche();
+        
+        if (isset($_GET['action'])) {
+            switch ($_GET['action']) {
+                case 'importer':
+                    importer_apprenants();
+                    break;
+                case 'export':
+                    export_apprenants($_GET['format'] ?? 'pdf');
+                    break;
+                case 'ajouter':
+                    ajouter_apprenant();
+                    break;
+                default:
+                    liste_apprenants();
+                    break;
+            }
+        } else {
+            liste_apprenants();
+        }
     })(),
 
     default => (function () use ($page) {
@@ -82,3 +95,8 @@ match ($page) {
             logout();
     })(),
 };
+
+
+
+
+

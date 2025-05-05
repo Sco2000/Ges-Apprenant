@@ -65,25 +65,14 @@ $css_promo = CheminPage::CSS_PROMO->value;
             <input type="hidden" name="page" value="liste_promo">
             <input type="hidden" name="view" value="<?= $view ?>">
         </form>
-        
-        <!-- Modification du select uniquement -->
-        <form method="GET" action="" style="display:inline;">
-            <input type="hidden" name="page" value="liste_promo">
-            <input type="hidden" name="view" value="<?= $view ?>">
-            <?php if(isset($_GET['search'])): ?>
-                <input type="hidden" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-            <?php endif; ?>
-            <select name="status">
-                <option value="tous" <?= (!isset($_GET['status']) || $_GET['status'] === 'tous') ? 'selected' : '' ?>>Tous</option>
-                <option value="active" <?= (isset($_GET['status']) && $_GET['status'] === 'active') ? 'selected' : '' ?>>Actives</option>
-                <option value="inactive" <?= (isset($_GET['status']) && $_GET['status'] === 'inactive') ? 'selected' : '' ?>>Inactives</option>
-            </select>
-            <button type="submit" class="filter-button">Filtrer</button>
-        </form>
-        
+        <select>
+            <option value="tous">Tous</option>
+            <option value="actives">Actives</option>
+            <option value="inactives">Inactives</option>
+        </select>
         <div class="view-toggle">
-            <a href="?page=liste_promo&view=grid<?= isset($_GET['search']) ? '&search=' . htmlspecialchars($_GET['search']) : '' ?><?= isset($_GET['status']) ? '&status=' . htmlspecialchars($_GET['status']) : '' ?>" class="<?= $view === 'grid' ? 'active' : '' ?>">Grille</a>
-            <a href="?page=liste_promo&view=list<?= isset($_GET['search']) ? '&search=' . htmlspecialchars($_GET['search']) : '' ?><?= isset($_GET['status']) ? '&status=' . htmlspecialchars($_GET['status']) : '' ?>" class="<?= $view === 'list' ? 'active' : '' ?>">Liste</a>
+            <a href="?page=liste_promo&view=grid" class="<?= $view === 'grid' ? 'active' : '' ?>">Grille</a>
+            <a href="?page=liste_promo&view=list" class="<?= $view === 'list' ? 'active' : '' ?>">Liste</a>
         </div>
     </div>
 
@@ -92,19 +81,32 @@ $css_promo = CheminPage::CSS_PROMO->value;
             <?php foreach ($paginatedPromos as $promo): ?>
                 <div class="promo-card">
                     <div class="toggle-container">
-                        <form method="POST" action="index.php?page=toggle_promo_status" class="toggle-form">
-                            <input type="hidden" name="id" value="<?= $promo['id'] ?>">
-                            <input type="hidden" name="current_status" value="<?= $promo['statut'] ?>">
-                            <input type="hidden" name="view" value="<?= $view ?>">
-                            <button type="submit" class="toggle-label <?= $promo['statut'] === 'Active' ? 'active' : '' ?>">
+                        <?php if ($promo['statut'] === 'Active'): ?>
+                            <!-- Promotion active - non cliquable -->
+                            <div class="toggle-label active">
                                 <div class="status-pill">
-                                    <?= $promo['statut'] === 'Active' ? 'Active' : 'Inactive' ?>
+                                    Active
                                 </div>
                                 <div class="power-button">
                                     <span class="power-dot"></span>
                                 </div>
-                            </button>
-                        </form>
+                            </div>
+                        <?php else: ?>
+                            <!-- Promotion inactive - cliquable -->
+                            <form method="POST" action="index.php?page=toggle_promo_status" class="toggle-form">
+                                <input type="hidden" name="id" value="<?= $promo['id'] ?>">
+                                <input type="hidden" name="current_status" value="<?= $promo['statut'] ?>">
+                                <input type="hidden" name="view" value="<?= $view ?>">
+                                <button type="submit" class="toggle-label">
+                                    <div class="status-pill">
+                                        Inactive
+                                    </div>
+                                    <div class="power-button">
+                                        <span class="power-dot"></span>
+                                    </div>
+                                </button>
+                            </form>
+                        <?php endif; ?>
                     </div>
 
                     <div class="promo-body">

@@ -1,0 +1,12 @@
+liste_apprenant.view.php apprenant.model.php apprenant.controller.php 
+Le fichier excel à televerser sera une liste d'apprenants avec leurs  informations suivantes:
+ -nom_complet; 
+-adresse; 
+-telephone;
+-e-mail;
+-référentiel; 
+-nom_complet_tuteur;
+-lien_de_parenté; 
+-adresse_du_tuteur; 
+-telephone_tuteur
+Apres importation, on vérifiera si tous ces champs sont remplis pour un apprenant. S'il y a un champ qui manque l'apprenant sera ajouté à la liste d'attente. Si tous les champs sont remplis, on vérifiera si le référentiel de l'apprenant est un référentiel de la promotion active. Si c'est pas le cas, l'apprenant sera aussi ajouté à la liste d'attente sinon il sera affecté à la clé apprenant du referentiel de la promotion active auquel il appartient et il sera aussi
